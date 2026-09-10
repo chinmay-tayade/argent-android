@@ -92,4 +92,4 @@ licenses.
 
 ## Author
 
-Chinmay Tayade — [LinkedIn](https://www.linkedin.com/in/chinmay-tayade)
+Chinmay Tayade — [LinkedIn](https://www.linkedin.com/in/chinmaytayade)
