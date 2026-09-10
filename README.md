@@ -1,5 +1,7 @@
 # Argent
 
+[![CI](https://github.com/chinmay-tayade/argent-android/actions/workflows/ci.yml/badge.svg)](https://github.com/chinmay-tayade/argent-android/actions/workflows/ci.yml)
+
 > A multi-module Android banking app, built to work through the parts of a
 > payments client that are actually hard: sync under failure, transaction
 > state you don't fully control, and credential storage that survives a
@@ -7,10 +9,11 @@
 >
 > Backed by an in-repo mock server — clone and run, no accounts needed.
 
-**Status: early WIP.** This repo starts design-first. The architecture and the
-hard-parts docs below are written; code lands incrementally from here (see
-[ROADMAP](ROADMAP.md)). Every claim in this README will map to code that
-exists before it moves out of the "planned" list.
+**Status: Milestone 0 complete — foundation in place, building green.**
+The multi-module skeleton, convention plugins, `:core:domain` (with tests),
+and a Hilt-wired `:app` are done. Features land incrementally from here
+(see [ROADMAP](ROADMAP.md)). Every claim in this README maps to code that
+exists before it leaves the "planned" list.
 
 ---
 
@@ -51,6 +54,18 @@ dependencies. Full write-up: **[docs/architecture.md](docs/architecture.md)**.
 `:core:domain` → nothing Android. `:core:data` is the only module importing
 both `:core:network` and `:core:database`.
 
+### What exists today (Milestone 0)
+
+```
+:app                 Hilt-wired Application + edge-to-edge Compose placeholder
+:core:common         Outcome<T,E> result type · DI-provided coroutine dispatchers
+:core:designsystem   ArgentTheme (Material 3, light/dark) — tokens come in M1
+:core:domain         pure Kotlin — Money, Account, ValidateTransferAmount + tests
+:core:testing        MainDispatcherRule, fixture builders
+build-logic          convention plugins: application, library, library.compose,
+                     feature, hilt, jvm.library
+```
+
 ## The hard parts
 
 | Topic | Doc |
@@ -68,12 +83,15 @@ Mock server: Ktor.
 
 ## Running it
 
-Nothing to run yet. Once the `app` and `:mock-server` modules exist:
+```
+./gradlew build            # compiles everything, runs unit tests, lint, R8
+./gradlew :app:assembleDebug
+```
 
-```
-./gradlew :mock-server:run      # terminal 1
-# then run the `app` configuration from Android Studio
-```
+Then open in Android Studio and run the `app` configuration — you'll get the
+Milestone 0 placeholder screen. Toolchain: AGP 8.9.1 · Kotlin 2.1.20 ·
+Gradle 8.13 · JDK 17 · compileSdk 36 / minSdk 26. (A bump to the current
+AGP 9.x / Kotlin 2.4.x line is the first task in Milestone 1.)
 
 No secrets, no API keys, no real bank.
 
